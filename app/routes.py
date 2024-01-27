@@ -1,5 +1,7 @@
-from flask import render_template, request
-from app import app
+from flask import Flask, render_template, request
+#from app import app
+
+app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -11,3 +13,6 @@ def create_group():
         creator_name = request.form["creator_name"]
         return creator_name
     return render_template('create_group.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
