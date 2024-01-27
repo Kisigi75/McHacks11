@@ -1,11 +1,6 @@
 from flask import Flask
-from config import Config
-#from flask_sqlalchemy import SQLAlchemy
-#from sqlalchemy.ext.declarative import declared_attr
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.secret_key = "super secret key"
 
-#db = SQLAlchemy(app)
-
-from app import password_app
+from app import routes

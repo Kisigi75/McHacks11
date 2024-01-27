@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Create Group</title>
 </head>
 <body>
-    <h1>Home</h1>
+    <h1>{{ creator_name }}'s group</h1>
     <div>
-        <a href="{{ url_for('create_group') }}">Create group</a>
-        <a href="{{ url_for('join_group') }}">Join group</a>
+        <p>Users in group: {{ user_list }}</p>
+    </div>
+    <div>
+        <p>Group code: {{ random_code }}</p>
     </div>
 </body>
 </html>
