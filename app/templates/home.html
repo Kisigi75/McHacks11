@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
+{% extends "navigation.html" %}
+
+{% block content %}
     <h1>Home</h1>
-    <div>
-        <a href="{{ url_for('create_group') }}">Create group</a>
-        <a href="{{ url_for('join_group') }}">Join group</a>
-    </div>
-</body>
-</html>
+
+    <form action="{{ url_for('login')}}">
+        <button type="Log in"></button>
+    </form>
+
+    <form action="{{ url_for('create_account')}}">
+        <button type="Create account"></button>
+    </form>
+    
+{% endblock %}
