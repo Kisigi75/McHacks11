@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+<h1>Welcome to the ToDo App</h1>
+<a href="{{ url_for('user_tasks') }}">Add a Task</a>
+
+<h1>Task List</h1>
+<ul>
+    {% for task in tasks %}
+    <li>
+        Title: {{ task.title }}, User ID: {{ task.user_id }},
+        Weight Group: {{ task.weight_group }},
+        Weight User: {{ task.weight_user }},
+        Status: {{ 'Complete' if task.complete else 'Incomplete' }}
+    </li>
+    {% else %}
+    <p>No tasks available.</p>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
