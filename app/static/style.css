@@ -1,39 +1,19 @@
 /* this is absolutely awful css i'm so sorry */
-
-
-.timer_on {
-    background-repeat: no-repeat;
-    animation-name: animate;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-play-state: running;
-    animation-timing-function:ease-in-out;
-
-    transition: 5s;
-    animation-delay: 30s;
-
-}
-
 body {
+    height: 100%;
+    width: 100%;
     background-image: url(pixil-frame-0.png);
     background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+
     color: white;
 }
 
-@keyframes animate{
-    100%{
-        background-image:url(pixil-frame-1.png);
-    }80%{
-        background-image:url(pixil-frame-2.png);
-    }60%{
-        background-image:url(pixil-frame-3.png);
-    }40%{
-        background-image:url(pixil-frame-4.png);
-    }20%{
-        background-image:url(pixil-frame-5.png);
-    }0%{
-        background-image:url(pixil-frame-6.png);
-    }
+.background {
+    position: fixed;
+    background-size: cover;
+    transition: 30s;
 }
 
 .navbar {
