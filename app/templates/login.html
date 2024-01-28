@@ -1,6 +1,7 @@
 {% extends "navigation.html" %}
 
 {% block content %}
+<div class="container">
     <h1>Sign In</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
@@ -17,6 +18,7 @@
     </form>
 
     <div>
-        <a href="{{ url_for('create_account') }}">Create account</a>
+        <a  class="link" href="{{ url_for('create_account') }}">Create account</a>
     </div>
+</div>
 {% endblock %}
