@@ -2,12 +2,19 @@
 <html>
     <head>
       {% if title %}
-      <title>{{ title }} - Microblog</title>
+      <title>{{ title }}</title>
       {% else %}
-      <title>Welcome to Microblog</title>
+      <title>Todo list</title>
       {% endif %}
     </head>
     <body>
+      <div>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login')}}">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout')}}">Logout</a>
+        {% endif %}
+      </div>
         <div>Todo list: <a href="/">Home</a></div>
         <hr>
         {% block content %}{% endblock %}

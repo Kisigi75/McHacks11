@@ -3,12 +3,20 @@
 {% block content %}
     <h1>Sign In</h1>
     <form action="" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username" required>
-        <br>
-        <label for="password">Password</label>
-        <input type="text" name="password" required>
-        <br>
-        <input type="submit" value="Submit">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </div>
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </div>
+        <div>{{ form.remember_me() }} {{ form.remember_me.label }}</div>
+        <div>{{ form.submit() }}</div>
     </form>
+
+    <div>
+        <a href="{{ url_for('create_account') }}">Create account</a>
+    </div>
 {% endblock %}
