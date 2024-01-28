@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import datetime
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -10,9 +10,8 @@ db = SQLAlchemy(app)
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(1000), nullable=False)
-    user_id = db.Column(db.String(20))
-    weight_group = db.Column(db.Integer)
-    weight_user = db.Column(db.Integer)
+    deadline = db.Column(db.DateTime, nullable=True)
+    weight_user = db.Column(db.Integer, nullable=True)
     complete = db.Column(db.Boolean, default=False)
 
 @app.route('/')
@@ -29,23 +28,21 @@ def user_tasks():
 @app.route('/add_task', methods = ["POST"])
 def add_task():
     title = request.form.get("title")
-    user_id = request.form.get("user_id")
+    deadline_str = request.form.get("deadline")
+    deadline = datetime.strptime(deadline_str,'%Y-%m-%d') if deadline_str else None
     weight_user = request.form.get("weight", type=int)
-    new_task = Tasks(title=title, weight_user=weight_user, complete=False)
+    new_task = Tasks(title=title, weight_user=weight_user, deadline=deadline,complete=False)
     db.session.add(new_task)
     db.session.commit()
-    return redirect('/user_tasks')
+    return redirect('/')
 
-
-'''@app.route("/update/<int:task_id>", methods=["GET","POST"])
-def update_task(task_id):
-    task = Tasks.query.get_or_404(task_id)
-    if request.method == 'POST':
-        task.complete = True
+@app.route("/update/<int:task_id>")
+def update(task_id):
+    task = Tasks.query.filter_by(id=task_id).first()
+    if task:
+        task.complete = not task.complete
         db.session.commit()
-        return redirect('user_tasks')
-    return render_template('')
-'''
+    return redirect('/')
 
 if __name__ == '__main__':
     with app.app_context():
