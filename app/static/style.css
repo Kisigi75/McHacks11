@@ -1,31 +1,155 @@
+/* this is absolutely awful css i'm so sorry */
+
+
+.timer_on {
+    background-repeat: no-repeat;
+    animation-name: animate;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-timing-function:ease-in-out;
+
+    transition: 5s;
+    animation-delay: 30s;
+
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    background-image: url(pixil-frame-0.png);
+    background-size: cover;
+    color: white;
+}
+
+@keyframes animate{
+    100%{
+        background-image:url(pixil-frame-1.png);
+    }80%{
+        background-image:url(pixil-frame-2.png);
+    }60%{
+        background-image:url(pixil-frame-3.png);
+    }40%{
+        background-image:url(pixil-frame-4.png);
+    }20%{
+        background-image:url(pixil-frame-5.png);
+    }0%{
+        background-image:url(pixil-frame-6.png);
+    }
+}
+
+.navbar {
+    display: block;
+    align-items: left;
+    background-color:rgb(187, 74, 45);
+}
+
+.container {
+    padding: 100px;
+    display: block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+
+.container-2 {
+    margin-left: 40px;
+    display: block;
+}
+
+.block {
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-incomplete {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    width: 100%;
+    margin:16px;
+    background-color: rgb(187, 74, 45);
+    color: white;
+    padding-left: 20px;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.12); 
+    border-radius: 12px;
+    text-align: left;
+}
+
+.completed-task {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    width: 100%;
+    margin:16px;
+    background-color: rgb(95, 126, 95);
+    color: white;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.12); 
+    border-radius: 12px;
+    padding-left: 20px;
+    text-align: left;
+
+}
+
+.col1 {
+    text-align: left;
+}
+
+.col2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;   
 }
 
 h1 {
-    color: #333;
+    color: white;
+    margin-top: 40px;
 }
 
-.progress-bar {
-    width: 100%;
-    background-color: #eee;
-    height: 20px;
-    margin-bottom: 10px;
-    overflow: hidden;
+h2 {
+    color: white;
+    margin-top: 15px;
 }
 
-.progress {
-    height: 100%;
-    background-color: #4caf50;
+h3 {
+    color: white;
+    size: 14px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.header-link{
+    color: rgb(250, 250, 250);
+    text-decoration:none;
 }
 
-li {
-    margin-bottom: 5px;
+.link{
+    color: white;
+    padding-left: 10px;
 }
 
+a {
+    color: white;
+}
+
+.action-forms {
+    display: flex;
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    border-radius: 12px;
+    color:  white;
+    background: rgb(187, 74, 45);
+    margin: 10px;
+    padding: 5px;
+    width: 250px;
+    box-shadow:0;
+}
+
+input {
+    border:0;
+    color: rgb(51, 40, 40);
+    margin: 10px;
+    padding: 5px;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.12); 
+}

@@ -3,13 +3,13 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 from app import app
 from app import db
-from .forms import LoginForm, CreateAccountForm
-from app.models import User, Tasks
+from .forms import LoginForm, CreateAccountForm, TaskForm
+from app.models import User, Task
 
 import sqlalchemy as sa
 import string
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 @app.route('/')
 @app.route('/index')
@@ -43,10 +43,11 @@ def create_account():
         return redirect(url_for('login'))
     form = CreateAccountForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, email=form.email.data, severity=0)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+
         flash('Account created!')
 
         return redirect(url_for('login'))
@@ -56,24 +57,44 @@ def create_account():
 @login_required
 @app.route('/dashboard')
 def dashboard():
-    tasks = Tasks.query.all()
+    u = current_user
+    query = u.tasks.select()
+    tasks = db.session.scalars(query).all()
+
     return render_template('dashboard.html', title="Dashboard", tasks=tasks)
 
-@app.route('/add_task', methods = ["POST"])
+@login_required
+@app.route('/add_task', methods = ["POST", "GET"])
 def add_task():
-    title = request.form.get("title")
-    deadline_str = request.form.get("deadline")
-    deadline = datetime.strptime(deadline_str,'%Y-%m-%d') if deadline_str else None
-    weight_user = request.form.get("weight", type=int)
-    new_task = Tasks(title=title, weight_user=weight_user, deadline=deadline,complete=False)
-    db.session.add(new_task)
-    db.session.commit()
-    return redirect('/')
+    form = TaskForm()
+    if form.validate_on_submit():
+        task = Task(title=form.title.data, deadline=form.deadline.data, weight_user=form.weight_user.data, author=current_user)
+        db.session.add(task)
+        db.session.commit()
 
+        flash('Task added.')
+
+        return redirect('/dashboard')
+    
+    return render_template("add_tasks.html", title="Add a task", form=form)
+
+@login_required
 @app.route("/update/<int:task_id>")
 def update(task_id):
-    task = Tasks.query.filter_by(id=task_id).first()
+    task = Task.query.filter_by(id=task_id).first()
     if task:
         task.complete = not task.complete
         db.session.commit()
-    return redirect('/')
+    return redirect(url_for("dashboard"))
+
+@login_required
+@app.route("/delete/<int:task_id>", methods=["GET", "POST"])
+def delete_task(task_id):
+    task = Task.query.filter_by(id=task_id).first()
+
+    db.session.delete(task)
+    db.session.commit()
+
+    flash("Task has been deleted.")
+
+    return redirect(url_for("dashboard"))

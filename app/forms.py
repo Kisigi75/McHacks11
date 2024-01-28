@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateTimeLocalField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, DataRequired, Email, EqualTo
 import sqlalchemy as sa
 from app import db
@@ -32,3 +32,13 @@ class CreateAccountForm(FlaskForm):
             User.email == email.data))
         if user is not None:
             raise ValidationError('Please use a different email address.') 
+        
+class TaskForm(FlaskForm):
+    title = StringField('Task title', validators=[DataRequired()])
+    deadline = DateTimeLocalField('Deadline', validators=[DataRequired()])
+    weight_user = IntegerField('Weight of task', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class Timer(FlaskForm):
+    deadline = DateTimeLocalField('Set Deadline', validators=[DataRequired()])
+    submit = SubmitField('Submit')

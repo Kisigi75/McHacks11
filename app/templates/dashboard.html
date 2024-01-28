@@ -1,26 +1,37 @@
 {% extends "navigation.html" %}
 
 {% block content %}
+<div class="container">
     <h1>{{ current_user.username }}'s dashboard</h1>
 
     <h2>Task List</h2>
 
-    <a href="{{ url_for('user_tasks') }}">Add a Task</a>
+    <form action="{{ url_for('add_task')}}">
+        <input type="submit" value="Add a task">
+    </form>
 
-    <ul>
+
+    <div class="container">
         {% for task in tasks %}
-        <li>
-            Title: {{ task.title }},
-            Weight: {{ task.weight_user }},
-            Deadline: {{task.deadline}},
-            Status: {{ 'Complete' if task.complete else 'Incomplete' }}
-            <a href="/update/{{ task.id }}">Update</a>
-        </li>
+        <div class="{% if task.complete %}completed-task{% else %}task-incomplete{% endif %}"> 
+            <div class="col1">
+                <h3>{{task.title}} {% if task.complete %}(completed){% else %} {% endif %}</h3>
+                <p class="task-text">Weight: {{task.weight_user }} | Deadline: {{ task.deadline }}</p>
+            </div>
+            <div class="col2">
+                <form style="display:inline" action="/update/{{ task.id }}">
+                    <input style="background-color: white; color: rgb(51, 40, 40); width: 40px; size: 12px;" class="task-button" type="submit" value="{% if task.complete %}━{% else %}✔{% endif %}"/>
+                </form action="/delete/{{ task.id }}">
+                <form style="display:inline" action="/delete/{{ task.id }}">
+                    <input  style="background-color: white; color: rgb(51, 40, 40); width: 40px; size: 12px;" class="task-button" type="submit" value="✖️"/>
+                </form>
+            </div>
+            </div>
+        </div>
         {% else %}
         <p>No tasks available.</p>
         {% endfor %}
-    </ul>
-    
+    </div>
 
 
 {% endblock %}
